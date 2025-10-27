@@ -6,7 +6,7 @@ public interface IUserRepository
 {
     Task<User?> GetByIdAsync(int id);
     
-    Task<User?> GetAllAsync();
+    Task<IEnumerable<User?>> GetAllAsync();
     
     Task<User?> GetByEmailAsync(string email);
     
