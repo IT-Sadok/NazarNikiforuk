@@ -1,21 +1,14 @@
-using BookingSystem.Domain.Common;
-using BookingSystem.Domain.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace BookingSystem.Domain.Entities;
 
-public class User : BaseEntity
+public class User : IdentityUser
 {
-    public required string Email { get; set; }
-    
-    public required string Password { get; set; }
-
     public required string FirstName { get; set; }
 
     public required string LastName { get; set; }
-
-    public required string PhoneNumber { get; set; }
     
     public bool IsActive { get; set; } =  true;
     
-    public UserRole Role { get; set; }
+    public required IdentityRole Role { get; set; }
 }

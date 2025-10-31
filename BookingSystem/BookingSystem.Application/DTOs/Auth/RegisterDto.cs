@@ -1,4 +1,4 @@
-using BookingSystem.Domain.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace BookingSystem.Application.DTOs.Auth;
 
@@ -14,5 +14,5 @@ public class RegisterDto
     
     public string PhoneNumber { get; set; } = string.Empty;
     
-    public UserRole Role { get; set; } = UserRole.Client;
+    public IdentityRole? Role { get; set; }
 }
