@@ -9,6 +9,4 @@ public class User : IdentityUser
     public required string LastName { get; set; }
     
     public bool IsActive { get; set; } =  true;
-    
-    public required IdentityRole Role { get; set; }
 }

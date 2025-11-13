@@ -30,15 +30,14 @@ public class AuthService(
             
             return new AuthResponseDto
             {
-                Token = token, 
+                Token = await token, 
                 User = new UserDto
                 {
                     Id = user.Id,
                     Email = user.Email,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    PhoneNumber = user.PhoneNumber,
-                    Role = user.Role
+                    PhoneNumber = user.PhoneNumber
                 }
             };
         }
@@ -63,15 +62,14 @@ public class AuthService(
 
         return new AuthResponseDto
         {
-            Token = token,
+            Token = await token,
             User = new UserDto
             {
                 Id = user.Id,
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                PhoneNumber = user.PhoneNumber,
-                Role = user.Role
+                PhoneNumber = user.PhoneNumber
             }
         };
     }

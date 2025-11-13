@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Identity;
-
 namespace BookingSystem.Application.DTOs;
 
 public class UserDto
@@ -13,6 +11,4 @@ public class UserDto
     public string LastName { get; set; } = string.Empty;
     
     public string PhoneNumber { get; set; } = string.Empty;
-    
-    public IdentityRole? Role { get; set; }
 }
