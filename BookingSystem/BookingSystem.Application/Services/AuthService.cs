@@ -9,23 +9,24 @@ using Microsoft.AspNetCore.Identity;
 namespace BookingSystem.Application.Services;
 
 public class AuthService(
-    IUserRepository userRepository,
+    UserManager<User> userManager,
     IJwtTokenGenerator jwtTokenGenerator,
     IPasswordHasher<User> passwordHasher,
     IMapper mapper) : IAuthService
 {
     public async Task<AuthResponseDto> RegisterAsync(RegisterDto registerDto)
         {
-            if (await userRepository.ExistsByEmailAsync(registerDto.Email))
+            if (await userManager.FindByEmailAsync(registerDto.Email) != null)
             {
                 throw new DomainException("User with this email already exists");
             }
 
             var user = mapper.Map<User>(registerDto);
             user.PasswordHash = passwordHasher.HashPassword(user, registerDto.Password);
+            
+            await userManager.CreateAsync(user, registerDto.Password);
 
-            await userRepository.AddAsync(user);
-
+            await userManager.AddToRoleAsync(user, "User");
             var token = jwtTokenGenerator.GenerateToken(user);
             
             return new AuthResponseDto
@@ -44,7 +45,7 @@ public class AuthService(
     
     public async Task<AuthResponseDto> LoginAsync(LoginDto loginDto)
     {
-        var user = await userRepository.GetByEmailAsync(loginDto.Email);
+        var user = await userManager.FindByEmailAsync(loginDto.Email);
         
         var result = passwordHasher.VerifyHashedPassword(user, loginDto.Password, loginDto.Password);
 
@@ -69,7 +70,7 @@ public class AuthService(
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                PhoneNumber = user.PhoneNumber
+                PhoneNumber = user.PhoneNumber,
             }
         };
     }
