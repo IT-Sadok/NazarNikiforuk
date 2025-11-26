@@ -47,7 +47,7 @@ public class AuthService(
     {
         var user = await userManager.FindByEmailAsync(loginDto.Email);
         
-        var result = passwordHasher.VerifyHashedPassword(user, loginDto.Password, loginDto.Password);
+        var result = passwordHasher.VerifyHashedPassword(user, user?.PasswordHash ?? string.Empty, loginDto.Password);
 
         if (user == null || result == PasswordVerificationResult.Failed)
         {

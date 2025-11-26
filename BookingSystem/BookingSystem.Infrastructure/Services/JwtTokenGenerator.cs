@@ -28,7 +28,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
     {
         var roles = await _userManager.GetRolesAsync(user);
 
-        var claims = new[]
+        var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id),
             new Claim(ClaimTypes.Email, user.Email),
@@ -39,7 +39,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
 
         foreach (var role in roles)
         {
-            ((IList) claims).Add(new Claim(ClaimTypes.Role, role));
+            claims.Add(new Claim(ClaimTypes.Role, role));
         }
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
