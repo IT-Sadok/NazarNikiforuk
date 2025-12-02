@@ -25,6 +25,7 @@ public class UserRepository : IUserRepository
     {
         return await _context.Users
             .OrderBy(u => u.FirstName)
+            .ThenBy(u => u.LastName)
             .ToListAsync();
     }
 
