@@ -38,4 +38,65 @@ public class MockHelpers
             
         return mock;
     }
+    
+     public static Mock<IPropertyRepository> CreatePropertyRepositoryMock()
+    {
+        var mock = new Mock<IPropertyRepository>();
+        
+        mock.Setup(x => x.GetAllAsync())
+            .ReturnsAsync(new List<Property>());
+            
+        mock.Setup(x => x.GetAvailablePropertiesAsync(
+            It.IsAny<DateTime?>(), 
+            It.IsAny<DateTime?>()))
+            .ReturnsAsync(new List<Property>());
+            
+        mock.Setup(x => x.GetByIdAsync(It.IsAny<string>()))
+            .ReturnsAsync((Property?)null);
+            
+        mock.Setup(x => x.CreateAsync(It.IsAny<Property>()))
+            .Returns(Task.CompletedTask);
+            
+        mock.Setup(x => x.UpdateAsync(It.IsAny<Property>()))
+            .Returns(Task.CompletedTask);
+            
+        mock.Setup(x => x.DeleteAsync(It.IsAny<string>()))
+            .Returns(Task.CompletedTask);
+            
+        return mock;
+    }
+
+    public static Mock<IBookingRepository> CreateBookingRepositoryMock()
+    {
+        var mock = new Mock<IBookingRepository>();
+        
+        mock.Setup(x => x.GetAllAsync())
+            .ReturnsAsync(new List<Booking>());
+            
+        mock.Setup(x => x.GetByIdAsync(It.IsAny<string>()))
+            .ReturnsAsync((Booking?)null);
+            
+        mock.Setup(x => x.GetByUserIdAsync(It.IsAny<string>()))
+            .ReturnsAsync(new List<Booking>());
+            
+        mock.Setup(x => x.GetByPropertyIdAsync(It.IsAny<string>()))
+            .ReturnsAsync(new List<Booking>());
+            
+        mock.Setup(x => x.IsPropertyAvailableAsync(
+            It.IsAny<string>(), 
+            It.IsAny<DateTime>(), 
+            It.IsAny<DateTime>()))
+            .ReturnsAsync(true);
+            
+        mock.Setup(x => x.AddAsync(It.IsAny<Booking>()))
+            .Returns(Task.CompletedTask);
+            
+        mock.Setup(x => x.UpdateAsync(It.IsAny<Booking>()))
+            .Returns(Task.CompletedTask);
+            
+        mock.Setup(x => x.DeleteAsync(It.IsAny<string>()))
+            .Returns(Task.CompletedTask);
+            
+        return mock;
+    }
 }
